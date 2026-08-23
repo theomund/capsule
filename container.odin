@@ -9,21 +9,25 @@ package main
 import "core:fmt"
 
 Container :: struct {
-	name: string,
+	name:  string,
+	image: Image,
 }
 
 create_container :: proc(metadata: Metadata) -> (container: Container, err: Error) {
-	image := create_image(metadata) or_return
-
 	container.name = fmt.aprintf("capsule_%s", metadata.name)
+	container.image = create_image(metadata) or_return
 
-	run_command([]string{"docker", "run", "-d", "--name", container.name, image.name}) or_return
+	run_command(
+		[]string{"docker", "run", "-d", "--name", container.name, container.image.name},
+	) or_return
 
 	return
 }
 
 destroy_container :: proc(container: Container) -> Error {
 	delete(container.name) or_return
+
+	destroy_image(container.image)
 
 	return nil
 }

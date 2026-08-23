@@ -13,14 +13,14 @@ main :: proc() {
 	logger := log.create_console_logger()
 	defer log.destroy_console_logger(logger)
 
-	context.logger = logger
-
 	when ODIN_DEBUG {
-		tracker := create_tracker(logger)
-		defer destroy_tracker(tracker)
-
+		tracker := create_tracker()
 		context = tracker.ctx
+
+		defer destroy_tracker(tracker)
 	}
+
+	context.logger = logger
 
 	if err := run(); err != nil {
 		log.error("Got error:", err)

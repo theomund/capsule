@@ -15,14 +15,13 @@ Tracker :: struct {
 	ctx:       runtime.Context,
 }
 
-create_tracker :: proc(logger: log.Logger) -> Tracker {
+create_tracker :: proc() -> Tracker {
 	allocator := new(mem.Tracking_Allocator)
 	ctx := runtime.default_context()
 
 	mem.tracking_allocator_init(allocator, ctx.allocator)
 
 	ctx.allocator = mem.tracking_allocator(allocator)
-	ctx.logger = logger
 
 	return {allocator, ctx}
 }
