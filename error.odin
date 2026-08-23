@@ -10,7 +10,7 @@ import "base:runtime"
 import "core:encoding/json"
 import "core:os"
 
-Error :: union {
+Error :: union #shared_nil {
 	json.Unmarshal_Error,
 	os.Error,
 	runtime.Allocator_Error,

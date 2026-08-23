@@ -6,19 +6,9 @@
 
 package main
 
-import "core:encoding/json"
-import "core:log"
-import "core:os"
-
 run :: proc() -> Error {
-	data := os.read_entire_file(".devcontainer/devcontainer.json", context.allocator) or_return
-	defer delete(data)
-
-	metadata: Metadata
-	json.unmarshal(data, &metadata) or_return
+	metadata := new_metadata() or_return
 	defer destroy_metadata(metadata)
-
-	log.info("Parsed metadata file:", metadata)
 
 	return nil
 }

@@ -6,6 +6,11 @@
 
 package main
 
+import "base:runtime"
+import "core:encoding/json"
+import "core:log"
+import "core:os"
+
 Metadata :: struct {
 	name:           string,
 	build:          struct {
@@ -18,6 +23,25 @@ Metadata :: struct {
 		},
 	},
 	securityOpt:    []string,
+}
+
+new_metadata :: proc() -> (metadata: Metadata, err: Error) {
+	paths := []string{".devcontainer/devcontainer.json", ".devcontainer.json"}
+
+	data: []byte
+	defer delete(data)
+
+	for path in paths {
+		if data, err = os.read_entire_file(path, context.allocator); err == nil {
+			break
+		}
+	}
+
+	json.unmarshal(data, &metadata) or_return
+
+	log.info("Parsed metadata file:", metadata)
+
+	return
 }
 
 destroy_metadata :: proc(metadata: Metadata) {
