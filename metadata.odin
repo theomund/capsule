@@ -6,7 +6,6 @@
 
 package main
 
-import "base:runtime"
 import "core:encoding/json"
 import "core:log"
 import "core:os"
