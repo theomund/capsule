@@ -7,6 +7,7 @@ RUN dnf copr enable -y sisyphus1813/odin-lang \
     && dnf install -y \
     bash-completion-2.17 \
     clang-22.1.8 \
+    docker-cli-29.7.2 \
     git-2.55.0 \
     hadolint-2.14.0 \
     kcov-43 \

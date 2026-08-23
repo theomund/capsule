@@ -6,16 +6,24 @@
 
 package main
 
+import "core:fmt"
+
 Container :: struct {
-	metadata: Metadata,
+	name: string,
 }
 
-create_container :: proc(metadata: Metadata) -> Container {
-	return {metadata}
+create_container :: proc(metadata: Metadata) -> (container: Container, err: Error) {
+	image := create_image(metadata) or_return
+
+	container.name = fmt.aprintf("capsule_%s", metadata.name)
+
+	run_command([]string{"docker", "run", "-d", "--name", container.name, image.name}) or_return
+
+	return
 }
 
 destroy_container :: proc(container: Container) -> Error {
-	destroy_metadata(container.metadata) or_return
+	delete(container.name) or_return
 
 	return nil
 }
