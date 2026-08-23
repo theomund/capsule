@@ -10,7 +10,7 @@ main :: proc() {
 	context.logger = logger
 
 	when ODIN_DEBUG {
-		tracker := new_tracker(logger)
+		tracker := create_tracker(logger)
 		defer destroy_tracker(tracker)
 
 		context = tracker.ctx

@@ -15,7 +15,7 @@ Tracker :: struct {
 	ctx:       runtime.Context,
 }
 
-new_tracker :: proc(logger: log.Logger) -> Tracker {
+create_tracker :: proc(logger: log.Logger) -> Tracker {
 	allocator := new(mem.Tracking_Allocator)
 	ctx := runtime.default_context()
 

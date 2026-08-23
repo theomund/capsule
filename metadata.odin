@@ -24,7 +24,7 @@ Metadata :: struct {
 	securityOpt:    []string,
 }
 
-new_metadata :: proc() -> (metadata: Metadata, err: Error) {
+create_metadata :: proc() -> (metadata: Metadata, err: Error) {
 	paths := []string{".devcontainer/devcontainer.json", ".devcontainer.json"}
 
 	data: []byte
@@ -43,26 +43,28 @@ new_metadata :: proc() -> (metadata: Metadata, err: Error) {
 	return
 }
 
-destroy_metadata :: proc(metadata: Metadata) {
-	delete(metadata.name)
-	delete(metadata.build.dockerfile)
+destroy_metadata :: proc(metadata: Metadata) -> Error {
+	delete(metadata.name) or_return
+	delete(metadata.build.dockerfile) or_return
 
 	for extension in metadata.customizations.vscode.extensions {
-		delete(extension)
+		delete(extension) or_return
 	}
 
-	delete(metadata.customizations.vscode.extensions)
+	delete(metadata.customizations.vscode.extensions) or_return
 
 	for key, value in metadata.customizations.vscode.settings {
-		delete(key)
-		delete(value)
+		delete(key) or_return
+		delete(value) or_return
 	}
 
-	delete(metadata.customizations.vscode.settings)
+	delete(metadata.customizations.vscode.settings) or_return
 
 	for option in metadata.securityOpt {
-		delete(option)
+		delete(option) or_return
 	}
 
-	delete(metadata.securityOpt)
+	delete(metadata.securityOpt) or_return
+
+	return nil
 }

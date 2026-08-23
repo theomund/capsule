@@ -18,8 +18,10 @@ run :: proc() -> Error {
 	case "up":
 		log.info("Creating development container")
 
-		metadata := new_metadata() or_return
-		defer destroy_metadata(metadata)
+		metadata := create_metadata() or_return
+
+		container := create_container(metadata)
+		defer destroy_container(container)
 	case:
 		return Capsule_Error.Invalid_Command
 	}
