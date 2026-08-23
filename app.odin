@@ -6,9 +6,23 @@
 
 package main
 
+import "core:log"
+import "core:os"
+
 run :: proc() -> Error {
-	metadata := new_metadata() or_return
-	defer destroy_metadata(metadata)
+	if len(os.args) < 2 {
+		return Capsule_Error.Invalid_Command
+	}
+
+	switch os.args[1] {
+	case "up":
+		log.info("Creating development container")
+
+		metadata := new_metadata() or_return
+		defer destroy_metadata(metadata)
+	case:
+		return Capsule_Error.Invalid_Command
+	}
 
 	return nil
 }

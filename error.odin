@@ -10,7 +10,13 @@ import "base:runtime"
 import "core:encoding/json"
 import "core:os"
 
+Capsule_Error :: enum {
+	None,
+	Invalid_Command,
+}
+
 Error :: union #shared_nil {
+	Capsule_Error,
 	json.Unmarshal_Error,
 	os.Error,
 	runtime.Allocator_Error,

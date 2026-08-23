@@ -38,7 +38,7 @@ new_metadata :: proc() -> (metadata: Metadata, err: Error) {
 
 	json.unmarshal(data, &metadata) or_return
 
-	log.info("Parsed metadata file:", metadata)
+	log.debug("Parsed metadata file:", metadata)
 
 	return
 }
