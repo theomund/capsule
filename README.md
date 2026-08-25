@@ -1,3 +1,11 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
 # Capsule
+
+![Build](https://img.shields.io/github/actions/workflow/status/theomund/capsule/linux.yml?style=for-the-badge&logo=linux&logoColor=white)
+![License](https://img.shields.io/github/license/theomund/capsule?style=for-the-badge&logo=mozilla&logoColor=white)
+![Toolchain](https://img.shields.io/badge/toolchain-dev--2026--08-blue?style=for-the-badge&logo=odin&logoColor=white)
 
 Development container tool built with Odin.

@@ -1,0 +1,31 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
+{
+  "name": "capsule",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "DanielGavin.ols",
+        "GitHub.vscode-github-actions",
+        "ms-azuretools.vscode-containers",
+        "ms-vscode.makefile-tools"
+      ],
+      "settings": {
+        "ols.server.path": "ols"
+      }
+    }
+  },
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind,consistency=cached"
+  ],
+  "securityOpt": [
+    "seccomp=unconfined"
+  ]
+}

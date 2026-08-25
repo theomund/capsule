@@ -1,0 +1,29 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
+package main
+
+import "core:log"
+import "core:os"
+
+main :: proc() {
+	logger := log.create_console_logger()
+	defer log.destroy_console_logger(logger)
+
+	when ODIN_DEBUG {
+		tracker := create_tracker()
+		context = tracker.ctx
+
+		defer destroy_tracker(tracker)
+	}
+
+	context.logger = logger
+
+	if err := run(); err != nil {
+		log.error("Got error:", err)
+		os.exit(1)
+	}
+}
