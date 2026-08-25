@@ -14,11 +14,13 @@ Container :: struct {
 }
 
 create_container :: proc(metadata: Metadata) -> (container: Container, err: Error) {
+	engine := create_engine() or_return
+
 	container.name = fmt.aprintf("capsule_%s", metadata.name)
-	container.image = create_image(metadata) or_return
+	container.image = create_image(engine, metadata) or_return
 
 	run_command(
-		[]string{"docker", "run", "-d", "--name", container.name, container.image.name},
+		[]string{engine.path, "run", "-d", "--name", container.name, container.image.name},
 	) or_return
 
 	return

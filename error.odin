@@ -13,6 +13,7 @@ import "core:os"
 Capsule_Error :: enum {
 	None,
 	Invalid_Command,
+	Invalid_Engine,
 }
 
 Error :: union #shared_nil {

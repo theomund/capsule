@@ -9,26 +9,28 @@ package main
 import "core:log"
 import "core:os"
 
-run_command :: proc(command: []string) -> Error {
+run_command :: proc(command: []string) -> (state: os.Process_State, err: Error) {
 	log.info("Running shell command:", command)
 
 	process := os.Process_Desc {
 		command = command,
 	}
 
-	_, stdout, stderr := os.process_exec(process, context.allocator) or_return
+	stdout, stderr: []byte
+
+	state, stdout, stderr = os.process_exec(process, context.allocator) or_return
 	defer {
 		delete(stdout)
 		delete(stderr)
 	}
 
 	if len(stdout) != 0 {
-		log.info("stdout:", string(stdout))
+		log.info(string(stdout))
 	}
 
 	if len(stderr) != 0 {
-		log.warn("stderr:", string(stderr))
+		log.warn(string(stderr))
 	}
 
-	return nil
+	return state, nil
 }

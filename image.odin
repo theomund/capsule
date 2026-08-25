@@ -12,13 +12,13 @@ Image :: struct {
 	name: string,
 }
 
-create_image :: proc(metadata: Metadata) -> (image: Image, err: Error) {
+create_image :: proc(engine: Engine, metadata: Metadata) -> (image: Image, err: Error) {
 	dockerfile := fmt.aprintf(".devcontainer/%s", metadata.build.dockerfile)
 	defer delete(dockerfile)
 
 	image.name = fmt.aprintf("capsule/%s", metadata.name)
 
-	run_command([]string{"docker", "build", "-f", dockerfile, "-t", image.name, "."}) or_return
+	run_command([]string{engine.path, "build", "-f", dockerfile, "-t", image.name, "."}) or_return
 
 	return
 }
