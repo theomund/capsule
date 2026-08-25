@@ -18,7 +18,7 @@ create_engine :: proc() -> (engine: Engine, err: Error) {
 	choices := []string{"docker", "podman"}
 
 	for choice in choices {
-		state := run_command([]string{choice, "info"}) or_return
+		state := run_command([]string{choice, "info"}) or_continue
 
 		if state.success {
 			engine.path = choice
