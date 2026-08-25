@@ -14,9 +14,7 @@ run :: proc() -> Error {
 	}
 
 	engine := detect_engine() or_return
-
 	metadata := create_metadata() or_return
-	defer destroy_metadata(metadata)
 
 	container := create_container(engine, metadata) or_return
 	defer destroy_container(container)

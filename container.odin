@@ -35,6 +35,8 @@ create_container :: proc(
 destroy_container :: proc(container: Container) -> Error {
 	delete(container.name) or_return
 
+	destroy_metadata(container.metadata) or_return
+
 	return nil
 }
 
