@@ -25,6 +25,8 @@ Metadata :: struct {
 }
 
 create_metadata :: proc() -> (metadata: Metadata, err: Error) {
+	log.info("Parsing metadata file")
+
 	paths := []string{".devcontainer/devcontainer.json", ".devcontainer.json"}
 
 	data: []byte
@@ -38,7 +40,9 @@ create_metadata :: proc() -> (metadata: Metadata, err: Error) {
 
 	json.unmarshal(data, &metadata) or_return
 
-	log.debug("Parsed metadata file:", metadata)
+	log.debug(metadata)
+
+	log.info("Parsed metadata file")
 
 	return
 }

@@ -10,7 +10,7 @@ import "core:log"
 import "core:os"
 
 run_command :: proc(command: []string) -> (state: os.Process_State, err: Error) {
-	log.info("Running shell command:", command)
+	log.info("Running command:", command)
 
 	process := os.Process_Desc {
 		command = command,

@@ -23,8 +23,6 @@ create_container :: proc(
 	container: Container,
 	err: Error,
 ) {
-	log.info("Creating development container")
-
 	container.name = fmt.aprintf("capsule_%s", metadata.name)
 	container.engine = engine
 	container.metadata = metadata
@@ -41,18 +39,28 @@ destroy_container :: proc(container: Container) -> Error {
 }
 
 execute_container :: proc(container: Container) -> Error {
+	log.info("Executing development container command")
+
 	run_command([]string{container.engine.path, "exec", container.name, os.args[2]}) or_return
+
+	log.info("Executed development container command")
 
 	return nil
 }
 
 remove_container :: proc(container: Container) -> Error {
+	log.info("Removing development container")
+
 	run_command([]string{container.engine.path, "rm", container.name}) or_return
+
+	log.info("Removed development container")
 
 	return nil
 }
 
 start_container :: proc(container: ^Container) -> Error {
+	log.info("Starting development container")
+
 	image := create_image(container.engine, container.metadata) or_return
 	defer destroy_image(image)
 
@@ -69,11 +77,17 @@ start_container :: proc(container: ^Container) -> Error {
 		},
 	) or_return
 
+	log.info("Started development container")
+
 	return nil
 }
 
 stop_container :: proc(container: Container) -> Error {
+	log.info("Stopping development container")
+
 	run_command([]string{container.engine.path, "stop", container.name}) or_return
+
+	log.info("Stopped development container")
 
 	return nil
 }
