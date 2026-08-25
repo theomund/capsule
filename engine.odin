@@ -12,8 +12,8 @@ Engine :: struct {
 	path: string,
 }
 
-create_engine :: proc() -> (engine: Engine, err: Error) {
-	log.info("Determining the container engine")
+detect_engine :: proc() -> (engine: Engine, err: Error) {
+	log.info("Detecting the container engine")
 
 	choices := []string{"docker", "podman"}
 
@@ -22,7 +22,7 @@ create_engine :: proc() -> (engine: Engine, err: Error) {
 
 		if state.success {
 			engine.path = choice
-			log.infof("Determined '%s' to be the container engine", engine.path)
+			log.infof("Detected '%s' to be the container engine", engine.path)
 
 			return
 		}

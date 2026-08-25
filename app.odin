@@ -6,7 +6,6 @@
 
 package main
 
-import "core:log"
 import "core:os"
 
 run :: proc() -> Error {
@@ -14,15 +13,24 @@ run :: proc() -> Error {
 		return Capsule_Error.Invalid_Command
 	}
 
+	engine := detect_engine() or_return
+
+	metadata := create_metadata() or_return
+	defer destroy_metadata(metadata)
+
+	container := create_container(engine, metadata) or_return
+	defer destroy_container(container)
+
 	switch os.args[1] {
+	case "down":
+		stop_container(container)
+		remove_container(container)
+	case "exec":
+		execute_container(container)
+	case "stop":
+		stop_container(container)
 	case "up":
-		log.info("Creating development container")
-
-		metadata := create_metadata() or_return
-		defer destroy_metadata(metadata)
-
-		container := create_container(metadata) or_return
-		defer destroy_container(container)
+		start_container(&container)
 	case:
 		return Capsule_Error.Invalid_Command
 	}
