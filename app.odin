@@ -23,14 +23,14 @@ run :: proc() -> Error {
 
 	switch os.args[1] {
 	case "down":
-		stop_container(container)
-		remove_container(container)
+		stop_container(container) or_return
+		remove_container(container) or_return
 	case "exec":
-		execute_container(container)
+		execute_container(container) or_return
 	case "stop":
-		stop_container(container)
+		stop_container(container) or_return
 	case "up":
-		start_container(&container)
+		start_container(&container) or_return
 	case:
 		return Capsule_Error.Invalid_Command
 	}
